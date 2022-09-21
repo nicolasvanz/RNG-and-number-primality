@@ -1,57 +1,37 @@
-from randomseed import *
+import sys
 
-def seed_update():
-    global seed
-    seed_digit_range = 160
-    seed = randint(10**(seed_digit_range-1),10**seed_digit_range-1)
+from rng.rng import \
+    lagged_fibonacci_generator, \
+    linear_congruential_generator, \
+    seed_update    
 
-def bit_truncate(n, bits):
-    length = n.bit_length()
-    if length > bits:
-        return int(bin(n)[2:-(n.bit_length() - bits)], 2)
-    elif length == bits:
-        return n
-    raise Exception("Expected longer number when truncating bits")
 
-def lagged_fibonacci_generator(bits, j = 128, k = 159):
-    global seed
-
-    lfg_sequence = [int(digit) for digit in str(seed)]
-    
-    n = lfg_sequence[-j]+lfg_sequence[-k]
-    lfg_sequence.append(n)
-
-    while n.bit_length() < bits:
-        sequence_next = lfg_sequence[-j]+lfg_sequence[-k]
-        n = int(str(n) + str(sequence_next))
-        lfg_sequence.append(sequence_next)
-
-    return bit_truncate(n, bits)
-
-# linear congruential generator
-def linear_congruential_generator(
-    bits,
-    mod = 2**32,
-    a = 16843009,
-    c = 826366247
-):
-    global seed
-
-    x = (seed * a + c) % mod
-    n = x
-
-    while (n.bit_length() < bits):
-        x = (x * a + c) % mod
-        n = int(str(n) + str(x))
-
-    return bit_truncate(n, bits)
-
-def init():
+def main(algorithm, bits):
     seed_update()
+    print(algorithm(bits))
 
 if __name__ == "__main__":
-    init()
-    n = lagged_fibonacci_generator(512)
-    print(n)
-    print(n.bit_length())
+    algorithms =  {
+        1 : lagged_fibonacci_generator,
+        2 : linear_congruential_generator
+    }
+
+    if len(sys.argv) != 3:
+        print("incorrect usage. Usage: python3 main.py <algorithm> <bits>")
+        print("where <algorithm> is the desired generator " \
+            "and <bits> is the desired random number bit length\n")
+        
+        print("<algorithm>:")
+        for key, value in algorithms.items():
+            print(f"{key} - {value.__name__}")
+        
+        exit(1)
+
+    try:
+        algorithm, bits = map(int, (sys.argv[1], sys.argv[2]))
+    except ValueError:
+        print("all arguments must be integers")
+        exit(1)
+
+    main(algorithms[algorithm], bits)
     
