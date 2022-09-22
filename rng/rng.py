@@ -2,7 +2,7 @@ from rng.randomseed import randint
 
 def seed_update():
     global seed
-    seed_digit_range = 160
+    seed_digit_range = 256
     seed = randint(10 ** (seed_digit_range - 1), 10 ** seed_digit_range - 1)
 
 def bit_truncate(n, bits):

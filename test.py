@@ -27,7 +27,7 @@ def main():
         4096,
     ]
     
-    runs = 100
+    runs = 1000
 
     for nbl in number_bit_lengths:
         table_row = [str(nbl)]
