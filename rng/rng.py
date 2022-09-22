@@ -1,5 +1,3 @@
-import random
-
 from rng.randomseed import randint
 
 def seed_update():
