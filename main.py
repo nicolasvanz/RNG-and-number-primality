@@ -7,7 +7,6 @@ from rng.rng import \
 
 
 def main(algorithm, bits):
-    seed_update()
     print(algorithm(bits))
 
 if __name__ == "__main__":
