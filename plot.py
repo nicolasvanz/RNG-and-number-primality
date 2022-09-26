@@ -31,7 +31,9 @@ def main(infilepath, outfilepath):
     # group subplots legends
     lns = lns1 + lns2 + lns3
     labs = [l.get_label() for l in lns]
-    plt.legend(lns, labs, loc="upper center")
+    # plt.legend(lns, labs, loc="upper center")
+    plt.legend(lns, labs, loc='center left', bbox_to_anchor=(0, -0.25))
+
 
     # plot styles
     ax1.grid()
