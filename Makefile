@@ -36,10 +36,16 @@ setup:
 	@echo -e "${GREEN} Virtual environment successfully created!${NC}"
 	$(call done)
 
-.PHONY: test
-test:
-	@echo -e "${GREEN} Running test...${NC}"
-	@-$(VENVBIN)python3 test.py $(OUTPUT_DIR)/$(TEST_OUTPUT)
+.PHONY: testrng
+testrng:
+	@echo -e "${GREEN} Running Random Number Generator test...${NC}"
+	@-$(VENVBIN)python3 rng_test.py $(OUTPUT_DIR)/$(TEST_OUTPUT)
+	$(call done)
+
+.PHONY: testprime
+testprime:
+	@echo -e "${GREEN} Running Primality test...${NC}"
+	@-$(VENVBIN)python3 primality_test.py
 	$(call done)
 
 .PHONY: plot
