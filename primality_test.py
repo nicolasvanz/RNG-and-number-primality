@@ -26,7 +26,7 @@ def main(outfilepath):
         512,
         1024,
         2048,
-        4096,
+        # 4096,
     ]
 
     generators = [linear_congruential_generator, lagged_fibonacci_generator]
