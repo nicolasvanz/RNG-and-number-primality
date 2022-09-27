@@ -8,7 +8,7 @@ from rng.rng import \
     
 from primality_test.primality_testers import miller_rabin, fermat
 
-def main(outfilepath):
+def main(outpath_results, outfile_false_positives):
     table = [[
         "bits",
         "lcg",
@@ -25,7 +25,7 @@ def main(outfilepath):
         256,
         512,
         1024,
-        2048,
+        # 2048,
         # 4096,
     ]
 
@@ -48,7 +48,8 @@ def main(outfilepath):
                     end = time.perf_counter_ns() / 1000
                     break
                 
-                if not any(fermat(n, 1), miller_rabin(n, 40)):
+                print(n)
+                if not any([fermat(n, 1), miller_rabin(n, 40)]):
                     false_positives.append(n)
                     continue
 
@@ -57,10 +58,13 @@ def main(outfilepath):
             table_row.append(f"{sum(times) / runs}")
         table.append(table_row)
 
-    with open(outfilepath, "w") as file:
+    with open(outpath_results, "w") as file:
         file.write("\n".join([",".join(line) for line in table]))
+    
+    with open(outfile_false_positives, "a") as file:
+        file.write("\n".join(map(lambda x: str(x), false_positives)))
 
 if __name__ == "__main__":
-    assert(len(sys.argv) == 2)
-    main(sys.argv[1])
+    assert(len(sys.argv) == 3)
+    main(sys.argv[1], sys.argv[2])
     
