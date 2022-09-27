@@ -33,3 +33,16 @@ def miller_rabin(n, trials):
         else:
             return False
     return True
+
+
+def fermat(n, trials):
+    if n == 2:
+        return True
+
+    if n % 2 == 0:
+        return False
+
+    for _ in range(trials):
+        if pow(random.randint(1, n-1), n-1, n) != 1:
+            return False
+    return True
