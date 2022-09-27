@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 results.csv
-output/
+output/*
+!output/false_positives.txt
