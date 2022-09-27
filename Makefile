@@ -6,18 +6,28 @@ GREEN=\033[0;32m
 RED=\033[0;31m
 NC=\033[0m
 
-TEST_OUTPUT?=results.csv
-PLOT_OUTPUT?=plot.pdf
 VENVNAME=venv
 VENVBIN=$(VENVNAME)/bin/
 
 CURR_DIR=$(PWD)
 OUTPUT_DIR=$(CURR_DIR)/output
+RNG_OUTPUT=$(OUTPUT_DIR)/rng_output.csv
+PRIMALITY_OUTPUT=$(OUTPUT_DIR)/primality_output.csv
+
+PLOT_RNG_OUTPUT?=$(OUTPUT_DIR)/rng.pdf
+PLOT_PRIMALITY_OUTPUT?=$(OUTPUT_DIR)/primality.pdf
 
 define done
     @echo -e "${GREEN} DONE${NC}"
 endef
 
+define plot
+	infile=${1}
+	outfile=${2}
+	@echo -e "${GREEN} Plotting...${NC}"
+	@-$(VENVBIN)python3 plot.py $(infile) $(outfile)
+	$(call done)
+endef
 
 .PHONY: dependencies
 dependencies:
@@ -39,21 +49,24 @@ setup:
 .PHONY: testrng
 testrng:
 	@echo -e "${GREEN} Running Random Number Generator test...${NC}"
-	@-$(VENVBIN)python3 rng_test.py $(OUTPUT_DIR)/$(TEST_OUTPUT)
+	@-$(VENVBIN)python3 rng_test.py $(RNG_OUTPUT)
 	$(call done)
 
 .PHONY: testprime
 testprime:
 	@echo -e "${GREEN} Running Primality test...${NC}"
-	@-$(VENVBIN)python3 primality_test.py
+	@-$(VENVBIN)python3 primality_test.py $(PRIMALITY_OUTPUT)
 	$(call done)
 
-.PHONY: plot
-plot:
-	@echo -e "${GREEN} Plotting...${NC}"
-	@-$(VENVBIN)python3 plot.py $(OUTPUT_DIR)/$(TEST_OUTPUT) $(OUTPUT_DIR)/$(PLOT_OUTPUT)
+.PHONY: plotrng
+plotrng:
+	$(call plot, $(RNG_OUTPUT), $(PLOT_RNG_OUTPUT))
 	$(call done)
 
+.PHONY: plotprime
+plotrng:
+	$(call plot, $(PRIMALITY_OUTPUT), $(PLOT_PRIMALITY_OUTPUT))
+	$(call done)
 
 .PHONY: clean
 clean:
