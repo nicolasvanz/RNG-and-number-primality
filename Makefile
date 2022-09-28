@@ -15,19 +15,16 @@ RNG_OUTPUT=$(OUTPUT_DIR)/rng_output.csv
 PRIMALITY_OUTPUT=$(OUTPUT_DIR)/primality_output.csv
 PRIMALITY_FALSE_POSITIVES=$(OUTPUT_DIR)/false_positives.txt
 
-PLOT_RNG_OUTPUT?=$(OUTPUT_DIR)/rng.pdf
-PLOT_PRIMALITY_OUTPUT?=$(OUTPUT_DIR)/primality.pdf
+PLOT_RNG_OUTPUT=$(OUTPUT_DIR)/rng.pdf
+PLOT_PRIMALITY_OUTPUT=$(OUTPUT_DIR)/primality.pdf
 
 define done
     @echo -e "${GREEN} DONE${NC}"
 endef
 
 define plot
-	infile=${1}
-	outfile=${2}
 	@echo -e "${GREEN} Plotting...${NC}"
-	@-$(VENVBIN)python3 plot.py $(infile) $(outfile)
-	$(call done)
+	@-$(VENVBIN)python3 plot.py ${1} ${2}
 endef
 
 .PHONY: dependencies
