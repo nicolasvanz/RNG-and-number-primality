@@ -31,7 +31,7 @@ def main(outpath_results, outfile_false_positives):
 
     generators = [linear_congruential_generator, lagged_fibonacci_generator]
 
-    runs = 1
+    runs = 100
     false_positives = []
 
     for nbl in number_bit_lengths:
