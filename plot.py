@@ -31,7 +31,9 @@ def main(infilepath, outfilepath, time_factor, title):
     # group subplots legends
     lns = lns1 + lns2 + lns3
     labs = [l.get_label() for l in lns]
-    plt.legend(lns, labs, loc='center left', bbox_to_anchor=(0, -0.25))
+    # plt.legend(lns, labs, loc='center left', bbox_to_anchor=(0, -0.25))
+    plt.legend(lns, labs, loc='upper center', bbox_to_anchor=(0.5, -0.05),
+          fancybox=True, shadow=True)
 
     time_factor_to_ylabel = {
         1 : "microsseconds",
