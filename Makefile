@@ -14,6 +14,7 @@ OUTPUT_DIR=$(CURR_DIR)/output
 RNG_OUTPUT=$(OUTPUT_DIR)/rng_output.csv
 PRIMALITY_OUTPUT=$(OUTPUT_DIR)/primality_output.csv
 PRIMALITY_FALSE_POSITIVES=$(OUTPUT_DIR)/false_positives.txt
+PRIMALITY_PRIMES=$(OUTPUT_DIR)/primes.txt
 
 PLOT_RNG_OUTPUT=$(OUTPUT_DIR)/rng.pdf
 PLOT_PRIMALITY_OUTPUT=$(OUTPUT_DIR)/primality.pdf
@@ -53,7 +54,7 @@ testrng:
 .PHONY: testprime
 testprime:
 	@echo -e "${GREEN} Running Primality test...${NC}"
-	@-$(VENVBIN)python3 primality_test.py $(PRIMALITY_OUTPUT) $(PRIMALITY_FALSE_POSITIVES)
+	@-$(VENVBIN)python3 primality_test.py $(PRIMALITY_OUTPUT) $(PRIMALITY_FALSE_POSITIVES) $(PRIMALITY_PRIMES)
 	$(call done)
 
 .PHONY: plotrng

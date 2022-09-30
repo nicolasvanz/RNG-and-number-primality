@@ -8,7 +8,7 @@ from rng.rng import \
     
 from primality_test.primality_testers import miller_rabin, fermat
 
-def main(outpath_results, outfile_false_positives):
+def main(outpath_results, outfile_false_positives, outpath_primes):
     table = [[
         "bits",
         "lcg",
@@ -25,13 +25,13 @@ def main(outpath_results, outfile_false_positives):
         256,
         512,
         1024,
-        # 2048,
-        # 4096,
+        2048,
+        4096,
     ]
 
     generators = [linear_congruential_generator, lagged_fibonacci_generator]
 
-    runs = 100
+    runs = 30
     false_positives = []
 
     for nbl in number_bit_lengths:
@@ -48,13 +48,17 @@ def main(outpath_results, outfile_false_positives):
                     end = time.perf_counter_ns() / 1000
                     break
                 
-                print(n)
+                print(f"{nbl} {quantity} -> {n}")
                 if not any([fermat(n, 1), miller_rabin(n, 40)]):
                     false_positives.append(n)
                     continue
 
                 quantity -= 1
                 times.append(end - start)
+
+                with open(outpath_primes, "a") as file:
+                    file.write(f"{n}\n")
+
             table_row.append(f"{sum(times) / runs}")
         table.append(table_row)
 
@@ -65,6 +69,6 @@ def main(outpath_results, outfile_false_positives):
         file.write("\n".join(map(lambda x: str(x), false_positives)))
 
 if __name__ == "__main__":
-    assert(len(sys.argv) == 3)
-    main(sys.argv[1], sys.argv[2])
+    assert(len(sys.argv) == 4)
+    main(sys.argv[1], sys.argv[2], sys.argv[3])
     
