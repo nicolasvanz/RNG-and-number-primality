@@ -1,14 +1,10 @@
 import random
 
+
+# returns if n is a probable prime or not based on miller rabin primality test
+# the bigger the parameters trials is, the more precise is the answer
 def miller_rabin(n, trials):
-
-    # Implementation uses the Miller-Rabin Primality Test
-    # The optimal number of rounds for this test is 40
-    # See http://stackoverflow.com/questions/6325576/how-many-iterations-of-rabin-miller-should-i-use-for-cryptographic-safe-primes
-    # for justification
-
-    # If number is even, it's a composite number
-
+    # basic test: n should be odd
     if n == 2:
         return True
 
@@ -35,6 +31,8 @@ def miller_rabin(n, trials):
     return True
 
 
+# returns if n is a probable prime or not based on fermat primality test
+# the bigger the parameters trials is, the more precise is the answer
 def fermat(n, trials):
     if n == 2:
         return True

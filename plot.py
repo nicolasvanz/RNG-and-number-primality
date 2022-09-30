@@ -31,12 +31,11 @@ def main(infilepath, outfilepath, time_factor, title):
     # group subplots legends
     lns = lns1 + lns2 + lns3
     labs = [l.get_label() for l in lns]
-    # plt.legend(lns, labs, loc="upper center")
     plt.legend(lns, labs, loc='center left', bbox_to_anchor=(0, -0.25))
 
     time_factor_to_ylabel = {
         1 : "microsseconds",
-        1000 : "milisseconds",
+        1000 : "millisseconds",
         1000000 : "seconds",
     }
 
@@ -45,18 +44,19 @@ def main(infilepath, outfilepath, time_factor, title):
     ax1.set_xlabel("bits amount")
     ax1.set_ylabel(time_factor_to_ylabel[time_factor])
     ax2.set_ylabel("LFG / LCG", color = "r")
-    # ax2.set_yticks(difference, difference)
     ax2.tick_params(axis="y", colors="red")
     plt.xticks(np.arange(len(bits_list)), bits_list)
     
+    # write exact y value on difference plotted line
     for index in range(len(npa)):
         plt.text(npa[index], difference[index], "%.1f" % (difference[index]))
 
     plt.title(f"{title}: LCG vs LFG")
 
-    # save
+    # save plot
     plt.savefig(outfilepath, bbox_inches = "tight")
 
 if __name__ == "__main__":
     assert(len(sys.argv) == 5)
+    # input file, output file, time factor and title
     main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4])

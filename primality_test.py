@@ -9,12 +9,14 @@ from rng.rng import \
 from primality_test.primality_testers import miller_rabin, fermat
 
 def main(outpath_results, outfile_false_positives, outpath_primes):
+    # output table
     table = [[
         "bits",
         "lcg",
         "lfg"
     ]]
 
+    # target bits length for tests
     number_bit_lengths = [
         40,
         56,
@@ -29,6 +31,7 @@ def main(outpath_results, outfile_false_positives, outpath_primes):
         4096,
     ]
 
+    # target generators for tests
     generators = [linear_congruential_generator, lagged_fibonacci_generator]
 
     runs = 30
@@ -48,7 +51,8 @@ def main(outpath_results, outfile_false_positives, outpath_primes):
                     end = time.perf_counter_ns() / 1000
                     break
                 
-                print(f"{nbl} {quantity} -> {n}")
+                # is n a false positive for a 1 trial
+                # miller rabin primality test?
                 if not any([fermat(n, 1), miller_rabin(n, 40)]):
                     false_positives.append(n)
                     continue
@@ -59,9 +63,11 @@ def main(outpath_results, outfile_false_positives, outpath_primes):
                 with open(outpath_primes, "a") as file:
                     file.write(f"{n}\n")
 
+            # add average elapsed time to results table row
             table_row.append(f"{sum(times) / runs}")
         table.append(table_row)
 
+    # save result
     with open(outpath_results, "w") as file:
         file.write("\n".join([",".join(line) for line in table]))
     

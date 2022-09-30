@@ -7,13 +7,17 @@ from rng.rng import \
     seed_update
 
 def main(outfilepath):
+    # output table title
     table = [[
         "bits",
         "lcg",
         "lfg"
     ]]
 
+    # target generators for tests
     generators = [linear_congruential_generator, lagged_fibonacci_generator]
+
+    # target bit lengths for tests
     number_bit_lengths = [
         40,
         56,
@@ -40,9 +44,11 @@ def main(outfilepath):
                 generator(nbl)
                 end = time.perf_counter_ns() / 1000
                 times.append(end - start)
+            # add average elapsed time to output table row
             table_row.append(f"{sum(times) / runs}")
         table.append(table_row)
 
+    # save results
     with open(outfilepath, "w") as file:
         file.write("\n".join([",".join(line) for line in table]))
 

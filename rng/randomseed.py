@@ -4,7 +4,7 @@ import time
 
 # returns k random bits using a relative drift of two clocks .
 # it does not produce "good" random bits, but we are suposed to use that
-# only when creating seeds 
+# only when creating the first seed
 def getrandbits(k):
     result = 0
     for _ in range(k):
@@ -17,7 +17,7 @@ def getrandbits(k):
 def randint(a, b):
     return a + randbelow(b - a + 1)
 
-# returns a random in in the range [0,n)
+# returns a random integer in the range [0,n)
 def randbelow(n):
     if n <= 0:
        raise ValueError
