@@ -132,3 +132,4 @@ results.csv
 output/*
 !output/false_positives.txt
 !output/primes.txt
+!output/primality_output.csv
