@@ -57,12 +57,12 @@ testprime:
 
 .PHONY: plotrng
 plotrng:
-	$(call plot, $(RNG_OUTPUT), $(PLOT_RNG_OUTPUT), 1, "Random number Generators")
+	$(call plot, $(RNG_OUTPUT), $(PLOT_RNG_OUTPUT), 1, "Random Number Generators")
 	$(call done)
 
 .PHONY: plotprime
 plotprime:
-	$(call plot, $(PRIMALITY_OUTPUT), $(PLOT_PRIMALITY_OUTPUT), 1000000, "Prime number generators")
+	$(call plot, $(PRIMALITY_OUTPUT), $(PLOT_PRIMALITY_OUTPUT), 1000000, "Prime Number Generators")
 	$(call done)
 
 .PHONY: clean
