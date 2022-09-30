@@ -36,8 +36,6 @@ dependencies:
 
 .PHONY: setup
 setup:
-	@echo -e "${GREEN} Creating output folder${NC}"
-	@mkdir -p output
 	@echo -e "${GREEN} Creating new virtual environment${NC}"
 	@python3 -m virtualenv $(VENVNAME)
 	@echo -e "${GREEN} Installing requirements${NC}"
@@ -73,6 +71,4 @@ clean:
 	@rm -rf $(VENVNAME)/
 	@echo -e "${RED} Removing python cached files${NC}"
 	@find . | grep -E "(/__pycache__)" | xargs rm -rf
-	@echo -e "${RED} Removing old output files${NC}"
-	@rm -rf $(OUTPUT_DIR)/
 	$(call done)
