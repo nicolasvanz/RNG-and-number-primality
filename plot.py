@@ -6,14 +6,14 @@ import numpy as np
 import pandas as pd
 
 
-def main(infilepath, outfilepath):
+def main(infilepath, outfilepath, time_factor, title):
     # read data
     df = pd.read_csv(infilepath)
 
     # get data sets
     bits_list = df["bits"].to_list()
-    lcg_list = df["lcg"].to_list()
-    lfg_list = df["lfg"].to_list()
+    lcg_list = (df["lcg"]/time_factor).to_list()
+    lfg_list = (df["lfg"]/time_factor).to_list()
     difference = df["lfg"] / df["lcg"]
     difference = difference.to_list()
 
@@ -34,11 +34,16 @@ def main(infilepath, outfilepath):
     # plt.legend(lns, labs, loc="upper center")
     plt.legend(lns, labs, loc='center left', bbox_to_anchor=(0, -0.25))
 
+    time_factor_to_ylabel = {
+        1 : "microsseconds",
+        1000 : "milisseconds",
+        1000000 : "seconds",
+    }
 
     # plot styles
     ax1.grid()
     ax1.set_xlabel("bits amount")
-    ax1.set_ylabel("microsseconds")
+    ax1.set_ylabel(time_factor_to_ylabel[time_factor])
     ax2.set_ylabel("LFG / LCG", color = "r")
     # ax2.set_yticks(difference, difference)
     ax2.tick_params(axis="y", colors="red")
@@ -47,11 +52,11 @@ def main(infilepath, outfilepath):
     for index in range(len(npa)):
         plt.text(npa[index], difference[index], "%.1f" % (difference[index]))
 
-    plt.title("LCG vs LFG")
+    plt.title(f"{title}: LCG vs LFG")
 
     # save
     plt.savefig(outfilepath, bbox_inches = "tight")
 
 if __name__ == "__main__":
-    assert(len(sys.argv) == 3)
-    main(sys.argv[1], sys.argv[2])
+    assert(len(sys.argv) == 5)
+    main(sys.argv[1], sys.argv[2], int(sys.argv[3]), sys.argv[4])

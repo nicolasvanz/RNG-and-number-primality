@@ -25,7 +25,7 @@ endef
 
 define plot
 	@echo -e "${GREEN} Plotting...${NC}"
-	@-$(VENVBIN)python3 plot.py ${1} ${2}
+	@-$(VENVBIN)python3 plot.py ${1} ${2} ${3} ${4}
 endef
 
 .PHONY: dependencies
@@ -57,12 +57,12 @@ testprime:
 
 .PHONY: plotrng
 plotrng:
-	$(call plot, $(RNG_OUTPUT), $(PLOT_RNG_OUTPUT))
+	$(call plot, $(RNG_OUTPUT), $(PLOT_RNG_OUTPUT), 1, "Random number Generators")
 	$(call done)
 
 .PHONY: plotprime
 plotprime:
-	$(call plot, $(PRIMALITY_OUTPUT), $(PLOT_PRIMALITY_OUTPUT))
+	$(call plot, $(PRIMALITY_OUTPUT), $(PLOT_PRIMALITY_OUTPUT), 1000000, "Prime number generators")
 	$(call done)
 
 .PHONY: clean
