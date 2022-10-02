@@ -19,7 +19,7 @@ def bit_truncate(n, bits):
         return n
     raise Exception("Expected longer number when truncating bits")
 
-def lagged_fibonacci_generator(bits, j = 128, k = 159):
+def lagged_fibonacci_generator(bits, j = 128, k = 159, m = 2**31):
     global seed, seed_digit_range
 
     # initial values
@@ -33,7 +33,7 @@ def lagged_fibonacci_generator(bits, j = 128, k = 159):
     # concatenates more random numbers to the sequence
     # until reach desired bit length
     while n.bit_length() < bits:
-        sequence_next = lfg_sequence[-j] + lfg_sequence[-k]
+        sequence_next = (lfg_sequence[-j] + lfg_sequence[-k]) % m
         n = int(str(n) + str(sequence_next))
         lfg_sequence.append(sequence_next)
 
